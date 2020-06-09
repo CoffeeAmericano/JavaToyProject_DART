@@ -1,0 +1,44 @@
+package VO;
+
+public class Search {
+	
+	private String ComName;
+	private int TypeCode;
+	private String IndustryName;
+	
+	public Search() {
+		super();
+	}
+
+	public Search(String comName, int typeCode, String industryName) {
+		super();
+		ComName = comName;
+		TypeCode = typeCode;
+		IndustryName = industryName;
+	}
+
+	public String getComName() {
+		return ComName;
+	}
+
+	public void setComName(String comName) {
+		ComName = comName;
+	}
+
+	public int getTypeCode() {
+		return TypeCode;
+	}
+
+	public void setTypeCode(int typeCode) {
+		TypeCode = typeCode;
+	}
+
+	public String getIndustryName() {
+		return IndustryName;
+	}
+
+	public void setIndustryName(String industryName) {
+		IndustryName = industryName;
+	}
+	
+}
