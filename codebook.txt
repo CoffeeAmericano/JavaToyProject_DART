@@ -16,3 +16,20 @@
 9. 'ifrs-full_IssuedCapital', 자본금
 10.'ifrs-full_PropertyPlantAndEquipment', 유형자산
 11.'ifrs-full_RetainedEarnings' 이익잉여금
+
+손익계산서 format
+1 회사종목코드
+2 재무정보
+
+파싱 항목
+각계정들 전부 같은 순서로 '_'로 묶여있고 na값은 'NA'로 되어있음
+1. 'ifrs-full_Revenue', 매출액
+2. 'ifrs-full_CostOfSale', 매출원가
+3. 'ifrs-full_GrossProfit', 매출이익
+4. 'ifrs-full_ProfitLossBeforeTax', 법인세비용차감전순이익(손실)
+5. 'ifrs-full_IncomeTaxExpenseContinuingOperations', 법인세비용
+6. 'ifrs-full_ProfitLoss', 당기순이익
+7. 'ifrs-full_ComprehensiveIncome', 포괄손익
+8. 'ifrs-full_BasicEarningsLossPerShare' EPS
+
+현금흐름표 format
