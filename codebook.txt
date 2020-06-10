@@ -33,3 +33,11 @@
 8. 'ifrs-full_BasicEarningsLossPerShare' EPS
 
 현금흐름표 format
+1 회사종목코드
+2 재무정보
+
+파싱 항목
+각계정들 전부 같은 순서로 '_'로 묶여있고 na값은 'NA'로 되어있음
+1.'ifrs-full_CashFlowsFromUsedInOperatingActivities' 영업활동현금흐름
+2.'ifrs-full_CashFlowsFromUsedInInvestingActivities' 투자활동현금흐름
+3.'ifrs-full_CashFlowsFromUsedInFinancingActivities' 재무활동현금흐름
