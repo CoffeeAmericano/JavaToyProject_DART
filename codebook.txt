@@ -1,0 +1,18 @@
+재무상태표 format
+1 회사종목코드
+2 재무정보
+
+재무정보 파싱 항목
+각계정들 전부 같은 순서로 '_'로 묶여있고 na값은 'NA'로 되어있음
+순서대로
+1. ifrs-full_Assets', 총자산
+2.'ifrs-full_Equity', 총자본
+3. 'ifrs-full_Liabilities', 총부채
+4. 'ifrs-full_CurrentAssets', 유동자산
+5. 'ifrs-full_CashAndCashEquivalents', 현금성자산 
+6. 'ifrs-full_Inventories', 재고자산
+7. 'ifrs-full_NoncurrentAssets', 비유동자산
+8. 'ifrs-full_CurrentLiabilities', 유동부채 
+9. 'ifrs-full_IssuedCapital', 자본금
+10.'ifrs-full_PropertyPlantAndEquipment', 유형자산
+11.'ifrs-full_RetainedEarnings' 이익잉여금
