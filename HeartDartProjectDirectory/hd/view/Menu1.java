@@ -125,7 +125,29 @@ public class Menu1 extends JFrame {
 	      if (dt.getRowCount() > 0)
 	         table.setRowSelectionInterval(0, 0);
 	      
-	      
+	      // 유저 조건 서치
+		JButton serach = new JButton("\uAC80\uC0C9");
+		p.add(serach);
+		serach.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				switch (combo.getSelectedItem().toString().trim()) {
+				case "전체" :
+					new SearchBIZ().userSearchAll(dt, textField.getText());
+					break;
+				case "회사명" :
+					new SearchBIZ().userSearch(dt, "com_name",textField.getText());
+					break;
+				case "코드" :
+					new SearchBIZ().userSearch(dt, "com_code",textField.getText());
+					break;
+				case "업종" :
+					new SearchBIZ().userSearch(dt, "industry_name",textField.getText());
+					break;
+				}
+			}
+		});
 	      
 	   }
 }
