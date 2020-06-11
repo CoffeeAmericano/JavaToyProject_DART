@@ -44,15 +44,15 @@ public class SearchDAO implements HeartDartSQL{
 		}
 	}//userSelectAll()
 	
-	// 유저서치기능
-	public void getUserSearch(DefaultTableModel dt, String fieldName, String word) {
+	public void getUserSearchAll(DefaultTableModel dt, String word) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 
 		try {
-			pstm = conn.prepareStatement(company_select);
-			pstm.setString(1, fieldName.trim());
+			pstm = conn.prepareStatement(company_searchAll);
+			pstm.setString(1, word.trim());
 			pstm.setString(2, word.trim());
+			pstm.setString(3, word.trim());
 			rs = pstm.executeQuery();
 
 			// DefaultTableModel에 있는 기존 데이터 지우기
@@ -60,7 +60,50 @@ public class SearchDAO implements HeartDartSQL{
 				dt.removeRow(0);
 			}
 			while (rs.next()) {
-				Object data[] = { rs.getString(1), rs.getInt(2), rs.getString(3) };
+				Object data[] = { rs.getString(1).substring(1, rs.getString(1).length() - 1), 
+						rs.getString(2).substring(1, rs.getString(2).length() - 1),
+						rs.getString(3).substring(1, rs.getString(3).length() - 1)};
+				dt.addRow(data);
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e + "=> getUserSearchAll fail");
+		} finally {
+			Close(rs);
+			Close(pstm);
+		}
+		
+	}
+	
+	// 한 조건 검색
+	public void getUserSearch(DefaultTableModel dt, String fieldName, String word) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			switch(fieldName) {
+			case "com_name" : 
+				pstm = conn.prepareStatement(company_searchName);
+				break;
+			case "com_code" :
+				pstm = conn.prepareStatement(company_searchCode);
+				break;
+			case "industry_name" :
+				pstm = conn.prepareStatement(company_searchIndustry);
+				break;
+				
+			}
+			pstm.setString(1, word.trim());
+			rs = pstm.executeQuery();
+
+			// DefaultTableModel에 있는 기존 데이터 지우기
+			for (int i = 0; i < dt.getRowCount();) {
+				dt.removeRow(0);
+			}
+			while (rs.next()) {
+				Object data[] = { rs.getString(1).substring(1, rs.getString(1).length() - 1), 
+						rs.getString(2).substring(1, rs.getString(2).length() - 1),
+						rs.getString(3).substring(1, rs.getString(3).length() - 1) };
 				dt.addRow(data);
 			}
 
@@ -71,5 +114,6 @@ public class SearchDAO implements HeartDartSQL{
 			Close(pstm);
 		}
 
-	}//getUserSearch()
+	}// getUserSearch()
+
 }
