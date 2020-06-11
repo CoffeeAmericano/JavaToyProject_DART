@@ -5,6 +5,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import hd.biz.SearchBIZ;
+
 public class Menu1 extends JFrame {
 	
 
@@ -98,13 +100,18 @@ public class Menu1 extends JFrame {
 		button.setBounds(366, 3, 87, 25);
 		panel.add(button);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(14, 219, 425, -127);
-		contentPane.add(scrollPane);
-		
+		// 회사 테이블을 첫 화면에 띄우기 
 		String[] name = {"회사명", "업종명", "종목코드"};
 		DefaultTableModel dt = new DefaultTableModel(name, 0);				
 		JTable table = new JTable(dt);
+		JScrollPane scrollPane = new JScrollPane(table);
+		
+		scrollPane.setBounds(14, 219, 425, -127);
+		contentPane.add(scrollPane);
+		
+		// 화면에 모든 회사 목록 띄우기 -> BIZ호출
+		SearchBIZ.userSelectAll(dt);
+		
 		
 	}
 }
