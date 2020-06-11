@@ -32,7 +32,7 @@ public class Menu1 extends JFrame {
 	 */
 	public Menu1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu1.class.getResource("/SecPage/HeartDart.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu1.class.getResource("/hd/view/HeartDart.png")));
 		setTitle("\u2665Heart Dart\u2665 - Search");
 		setBounds(100, 100, 481, 319);
 		contentPane = new JPanel();
