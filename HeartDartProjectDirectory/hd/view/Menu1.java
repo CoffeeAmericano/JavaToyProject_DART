@@ -53,7 +53,7 @@ public class Menu1 extends JFrame {
 	      JComboBox combo = new JComboBox(new Object[]{});
 	      combo.setBackground(Color.WHITE);
 	      combo.setFont(new Font("경기천년바탕 Regular", Font.BOLD, 17));
-	      combo.setModel(new DefaultComboBoxModel(new String[] {"  \uC804\uCCB4", "  \uD68C\uC0AC\uBA85 ", "  \uCF54\uB4DC", "  \uC5C5\uC885", "   "}));
+	      combo.setModel(new DefaultComboBoxModel(new String[] {"  \uC804\uCCB4", "  \uD68C\uC0AC\uBA85 ", "  \uCF54\uB4DC", "  \uC5C5\uC885"}));
 	      p.add(combo);
 	      
 	      textField = new JTextField(20);
@@ -109,7 +109,11 @@ public class Menu1 extends JFrame {
 	      contentPane.add(scrollPane);
 	      
 	      String[] name = {"회사명", "업종명", "종목코드"};
-	      DefaultTableModel dt = new DefaultTableModel(name, 0);
+	      DefaultTableModel dt = new DefaultTableModel(name, 0){
+	    	  public boolean isCellEditable(int i, int c){
+	              return false;
+	             }
+	      };
 	      
 	      table = new JTable(dt);
 	      scrollPane.setViewportView(table);
