@@ -30,7 +30,9 @@ public class SearchDAO implements HeartDartSQL{
 			}
 
 			while (rs.next()) {
-				Object data[] = { rs.getString(1), rs.getString(2), rs.getString(3)};
+				Object data[] = { rs.getString(1).substring(1, rs.getString(1).length() - 1), 
+						rs.getString(2).substring(1, rs.getString(2).length() - 1),
+						rs.getString(3).substring(1, rs.getString(3).length() - 1) };
 				t_model.addRow(data); //DefaultTableModel에 레코드 추가
 			}
 
