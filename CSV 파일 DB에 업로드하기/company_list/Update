@@ -1,0 +1,36 @@
+companyinfo.csv를 sqlplus에 업로드하기
+
+# Step 1. SQLPLUS에서 company_list 테이블을 만든다
+
+SQL> desc company_list;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COM_NAME                                           VARCHAR2(30)
+ INDUSTRY_NAME                                      VARCHAR2(100)
+ COM_CODE                                           VARCHAR2(150)
+
+
+
+# Step 2. SQLPLUS에 한글이 깨지지 않도록 ddd.ctl 파일을 다음과 같이 작성한다.
+
+load data
+characterset utf8
+infile 'companyinfo.csv'
+insert into table company_list
+FIELDS TERMINATED BY ',' 
+TRAILING NULLCOLS
+(com_name, industry_name, com_code)
+
+
+
+# Step 3. SQLPLUS에 다음 코드를 실행한다.
+
+# PlayData\final_3라는 디렉토리 안에 ddd.ctl 파일과 companyinfo.csv 파일이 있음
+
+C:\Users\Playdata\final_3> sqlldr big5/admin1234 control = 'ddd.ctl' data = 'companyinfo.csv'
+
+
+
+
+
+
