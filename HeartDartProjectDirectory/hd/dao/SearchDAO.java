@@ -16,7 +16,7 @@ public class SearchDAO implements HeartDartSQL{
 		this.conn = conn;
 	}
 	
-	// ÀüÃ¼À¯Àú°Ë»ö
+	// ì „ì²´ìœ ì €ê²€ìƒ‰
 	public void getUserSelectAll(DefaultTableModel t_model) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -24,14 +24,14 @@ public class SearchDAO implements HeartDartSQL{
 			pstm = conn.prepareStatement(company_selectall);
 			rs = pstm.executeQuery();
 
-			// DefaultTableModel¿¡ ÀÖ´Â ±âÁ¸ µ¥ÀÌÅÍ Áö¿ì±â
+			// DefaultTableModelì— ìˆëŠ” ê¸°ì¡´ ë°ì´í„° ì§€ìš°ê¸°
 			for (int i = 0; i < t_model.getRowCount();) {
 				t_model.removeRow(0);
 			}
 
 			while (rs.next()) {
-				Object data[] = { rs.getString(1), rs.getInt(2), rs.getString(3)};
-				t_model.addRow(data); //DefaultTableModel¿¡ ·¹ÄÚµå Ãß°¡
+				Object data[] = { rs.getString(1), rs.getString(2), rs.getString(3)};
+				t_model.addRow(data); //DefaultTableModelì— ë ˆì½”ë“œ ì¶”ê°€
 			}
 
 		} catch (SQLException e) {
@@ -42,7 +42,7 @@ public class SearchDAO implements HeartDartSQL{
 		}
 	}//userSelectAll()
 	
-	// À¯Àú¼­Ä¡±â´É
+	// ìœ ì €ì„œì¹˜ê¸°ëŠ¥
 	public void getUserSearch(DefaultTableModel dt, String fieldName, String word) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -53,7 +53,7 @@ public class SearchDAO implements HeartDartSQL{
 			pstm.setString(2, word.trim());
 			rs = pstm.executeQuery();
 
-			// DefaultTableModel¿¡ ÀÖ´Â ±âÁ¸ µ¥ÀÌÅÍ Áö¿ì±â
+			// DefaultTableModelì— ìˆëŠ” ê¸°ì¡´ ë°ì´í„° ì§€ìš°ê¸°
 			for (int i = 0; i < dt.getRowCount();) {
 				dt.removeRow(0);
 			}
