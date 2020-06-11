@@ -1,12 +1,17 @@
-import java.sql.*;
-import javax.swing.table.DefaultTableModel;
-import static Page_1.JDBCTemplate.*;
+package hd.dao;
 
-public class DefaultDAO implements HeartDartSQL{
-	
+import static common.JDBCTemplate.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.table.DefaultTableModel;
+
+public class SearchDAO implements HeartDartSQL{
 	private Connection conn;
 
-	public DefaultDAO(Connection conn) {
+	public SearchDAO(Connection conn) {
 		super();
 		this.conn = conn;
 	}
@@ -16,7 +21,7 @@ public class DefaultDAO implements HeartDartSQL{
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-			pstm = conn.prepareStatement(company_all);
+			pstm = conn.prepareStatement(company_selectall);
 			rs = pstm.executeQuery();
 
 			// DefaultTableModel에 있는 기존 데이터 지우기
@@ -43,7 +48,7 @@ public class DefaultDAO implements HeartDartSQL{
 		ResultSet rs = null;
 
 		try {
-			pstm = conn.prepareStatement(company_search);
+			pstm = conn.prepareStatement(company_select);
 			pstm.setString(1, fieldName.trim());
 			pstm.setString(2, word.trim());
 			rs = pstm.executeQuery();
@@ -65,6 +70,4 @@ public class DefaultDAO implements HeartDartSQL{
 		}
 
 	}//getUserSearch()
-	
-	
 }
