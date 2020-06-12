@@ -185,4 +185,42 @@ public class Page extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	public Map<String, ArrayList<String>> parseInfo(InfoVO infoVO) {
+
+		Map<String, ArrayList<String>> ret = new HashMap<>(3, 1);
+		ArrayList<String> bsList = new ArrayList<>();
+		ArrayList<String> isList = new ArrayList<>();
+		ArrayList<String> cfList = new ArrayList<>();
+
+		Scanner sc = new Scanner(infoVO.getBs()).useDelimiter("_");
+		
+		while (sc.hasNext()) {
+			bsList.add(sc.next());
+		}
+		for(int i = 0; i<bsList.size(); i++) {
+			System.out.println(bsList.get(i));
+		}
+		
+		sc = new Scanner(infoVO.getIs()).useDelimiter("_");
+		while (sc.hasNext()) {
+			isList.add(sc.next());
+		}
+		
+		sc = new Scanner(infoVO.getCf()).useDelimiter("_");
+		while (sc.hasNext()) {
+			cfList.add(sc.next());
+		}
+		ret.put("재무상태표", bsList);
+		ret.put("손익계산서", isList);
+		ret.put("현금흐름표", cfList);
+		
+		return ret;
+
+	}
+	
+	public BigInteger strToBig(String info_str) {
+		if (info_str == "NA")
+			return null;
+		return new BigDecimal(info_str).toBigInteger();
+	}
 }
