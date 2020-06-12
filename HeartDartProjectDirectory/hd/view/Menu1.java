@@ -149,6 +149,24 @@ public class Menu1 extends JFrame {
 				}
 			}
 		});
+		// 더블클릭 Info 확인
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				JTable jt = (JTable)e.getSource();
+				Point point = e.getPoint();
+				int row = jt.rowAtPoint(point);
+				if(e.getClickCount() == 2 && jt.getSelectedRow() != -1) {
+					String clickCode = (String) jt.getValueAt(row, 2);
+					String period = yearChoice.getSelectedItem().substring(2, 4) + "_" +
+							quarterChoice.getSelectedItem();
+					InfoVO infoVO = new InfoBIZ().infoSelect(clickCode, period);
+					Page page = new Page(infoVO);
+				}
+			}
+		});   
+
+
 	      
 	   }
 }
