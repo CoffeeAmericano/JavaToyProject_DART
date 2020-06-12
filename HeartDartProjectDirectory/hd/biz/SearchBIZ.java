@@ -11,11 +11,12 @@ public class SearchBIZ {
 
 	public static void userSelectAll(DefaultTableModel dt) {
 		Connection conn = getConnection();
-		
+
 		new SearchDAO(conn).getUserSelectAll(dt);
 		Close(conn);
-		
+
 	}
+
 	public void userSearchAll(DefaultTableModel dt, String word) {
 		Connection conn = getConnection();
 
@@ -32,3 +33,4 @@ public class SearchBIZ {
 	}
 
 }
+
