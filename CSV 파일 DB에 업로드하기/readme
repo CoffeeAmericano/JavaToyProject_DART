@@ -1,9 +1,18 @@
 Step 1. SQL에서 테이블 만들기
 
+SQL> create table darttable(
+     num varchar2(1000) // num은 number가 아니라 여기서는 varchar2임!!***
+     com_code varchar2(1000),
+     bs_19_3 varchar2(1000),
+     is_19_3 varchar2(1000),
+     cf_19_3 varchar2(1000));
 
-SQL> desc darttable2;
+
+
+SQL> desc darttable;
  Name                                      Null?    Type
  ----------------------------------------- -------- ----------------------------
+ NUM                                                VARCHAR2(1000)
  COM_CODE                                           VARCHAR2(1000)
  BS_19_3                                            VARCHAR2(1000)
  IS_19_3                                            VARCHAR2(1000)
@@ -11,7 +20,7 @@ SQL> desc darttable2;
 
 
 ========================================================================
-Step 2. CSV 파일을 DartTable2에 넣기
+Step 2. CSV 파일을 darttable에 넣기
 
 준비물: csv 파일, ctl 파일
 
@@ -32,18 +41,25 @@ finance_19_3.csv의 칼럼명
 : ctl은 control file의 줄임말로, cmd(command line) 상에서 sql 구문을 실행할 수 있는 파일
 
 [ ddd.ctl 파일 내용 ]
--- finance_19_3.csv 파일 내용 DartTable2에 넣어라 
+-- finance_19_3.csv 파일 내용 DartTable에 넣어라 
 load data
 infile 'finance_19_3.csv'
-insert into table DartTable2
+insert into table darttable
 FIELDS TERMINATED BY ',' 
 TRAILING NULLCOLS
-(com_code, bs_19_3, is_19_3, cf_19_3)
+(num, com_code, bs_19_3, is_19_3, cf_19_3)
 
 
 
 
 3. ddd.log
 : C:\Users\Playdata\final_2>sqlldr big5/admin1234 control = 'ddd.ctl' data = 'finance_19_3.csv' 을 실행했을 때 자동으로 생성되는 로그파일
+
+
+
+4. 마지막에 num 칼럼 지우기
+SQL> alter table darttable
+  2  drop column num;
+
 
 
