@@ -2,7 +2,7 @@ package hd.dao;
 
 public interface HeartDartSQL {
 
-	String company_selectall = "SELECT * FROM COMPANY_LIST ORDER BY COMPANYNAME";
+	String company_selectall = "SELECT * FROM COMPANY_LIST ORDER BY COM_NAME";
 
 	String company_searchAll = "SELECT * FROM COMPANY_LIST "
 	         + "WHERE COM_NAME LIKE '%' || ? || '%' "
