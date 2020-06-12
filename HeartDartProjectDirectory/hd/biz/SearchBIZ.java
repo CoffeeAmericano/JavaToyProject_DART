@@ -16,5 +16,19 @@ public class SearchBIZ {
 		Close(conn);
 		
 	}
+	public void userSearchAll(DefaultTableModel dt, String word) {
+		Connection conn = getConnection();
+
+		new SearchDAO(conn).getUserSearchAll(dt, word);
+		Close(conn);
+
+	}
+
+	public void userSearch(DefaultTableModel dt, String type, String word) {
+		Connection conn = getConnection();
+
+		new SearchDAO(conn).getUserSearch(dt, type, word);
+		Close(conn);
+	}
 
 }
