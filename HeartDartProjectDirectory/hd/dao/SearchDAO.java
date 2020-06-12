@@ -8,14 +8,14 @@ import java.sql.SQLException;
 
 import javax.swing.table.DefaultTableModel;
 
-public class SearchDAO implements HeartDartSQL{
+public class SearchDAO implements HeartDartSQL {
 	private Connection conn;
 
 	public SearchDAO(Connection conn) {
 		super();
 		this.conn = conn;
 	}
-	
+
 	// 전체유저검색
 	public void getUserSelectAll(DefaultTableModel t_model) {
 		PreparedStatement pstm = null;
@@ -30,10 +30,8 @@ public class SearchDAO implements HeartDartSQL{
 			}
 
 			while (rs.next()) {
-				Object data[] = { rs.getString(1).substring(1, rs.getString(1).length() - 1), 
-						rs.getString(2).substring(1, rs.getString(2).length() - 1),
-						rs.getString(3).substring(1, rs.getString(3).length() - 1) };
-				t_model.addRow(data); //DefaultTableModel에 레코드 추가
+				Object data[] = {rs.getString(2), rs.getString(3), rs.getString(1)};
+				t_model.addRow(data); // DefaultTableModel에 레코드 추가
 			}
 
 		} catch (SQLException e) {
@@ -42,8 +40,9 @@ public class SearchDAO implements HeartDartSQL{
 			Close(pstm);
 			Close(rs);
 		}
-	}//userSelectAll()
-	
+	}// userSelectAll()
+
+	// 모든 조건 검색
 	public void getUserSearchAll(DefaultTableModel dt, String word) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -60,9 +59,7 @@ public class SearchDAO implements HeartDartSQL{
 				dt.removeRow(0);
 			}
 			while (rs.next()) {
-				Object data[] = { rs.getString(1).substring(1, rs.getString(1).length() - 1), 
-						rs.getString(2).substring(1, rs.getString(2).length() - 1),
-						rs.getString(3).substring(1, rs.getString(3).length() - 1)};
+				Object data[] = {rs.getString(2), rs.getString(3), rs.getString(1)};
 				dt.addRow(data);
 			}
 
@@ -101,9 +98,7 @@ public class SearchDAO implements HeartDartSQL{
 				dt.removeRow(0);
 			}
 			while (rs.next()) {
-				Object data[] = { rs.getString(1).substring(1, rs.getString(1).length() - 1), 
-						rs.getString(2).substring(1, rs.getString(2).length() - 1),
-						rs.getString(3).substring(1, rs.getString(3).length() - 1) };
+				Object data[] = {rs.getString(2), rs.getString(3), rs.getString(1)};
 				dt.addRow(data);
 			}
 
@@ -116,4 +111,5 @@ public class SearchDAO implements HeartDartSQL{
 
 	}// getUserSearch()
 
+	
 }
