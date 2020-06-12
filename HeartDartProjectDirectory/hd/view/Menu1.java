@@ -1,6 +1,9 @@
 package hd.view;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -59,9 +62,7 @@ public class Menu1 extends JFrame {
 	      textField = new JTextField(20);
 	      p.add(textField);
 	      
-	      JButton serach = new JButton("\uAC80\uC0C9");
-	      p.add(serach);
-	      
+	           
 	      JPanel panel = new JPanel();
 	      panel.setBackground(Color.DARK_GRAY);
 	      panel.setBounds(0, 0, 463, 30);
