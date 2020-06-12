@@ -10,12 +10,9 @@
 3. 'ifrs-full_Liabilities', 총부채
 4. 'ifrs-full_CurrentAssets', 유동자산
 5. 'ifrs-full_CashAndCashEquivalents', 현금성자산 
-6. 'ifrs-full_Inventories', 재고자산
-7. 'ifrs-full_NoncurrentAssets', 비유동자산
-8. 'ifrs-full_CurrentLiabilities', 유동부채 
-9. 'ifrs-full_IssuedCapital', 자본금
-10.'ifrs-full_PropertyPlantAndEquipment', 유형자산
-11.'ifrs-full_RetainedEarnings' 이익잉여금
+6. 'ifrs-full_NoncurrentAssets', 비유동자산
+7. 'ifrs-full_CurrentLiabilities', 유동부채 
+8.'ifrs-full_RetainedEarnings' 이익잉여금
 
 손익계산서 format
 1 회사종목코드
