@@ -27,7 +27,7 @@ infile 'companyinfo.csv'
 insert into table company_list
 FIELDS TERMINATED BY ',' 
 TRAILING NULLCOLS
-(com_name, industry_name, com_code)
+(num, com_name, industry_name, com_code)
 
 
 
