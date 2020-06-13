@@ -27,6 +27,7 @@ public class Page extends JFrame {
 		this.infoVO = infoVO;
 	}
 	
+	// parseInfoVO : 계정항목(key)과 숫자 리스트(value)가 Map으로 이루어진 객체
 	public Map<String, ArrayList<BigInteger>> getParseInfoVO() {
 		return parseInfoVO;
 	}
@@ -190,6 +191,8 @@ public class Page extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	// parseInfoVO 메서드는 String 형태의 InfoVO를 숫자로 변환해주는 메서드
 	public void parseInfoVO(InfoVO infoVO) {
 
 		Map<String, ArrayList<BigInteger>> ret = new HashMap<>(3, 1);
@@ -215,14 +218,15 @@ public class Page extends JFrame {
 		while (sc.hasNext()) {
 			cfList.add(strToBig(sc.next()));
 		}
-		ret.put("재무상태표", bsList);
-		ret.put("손익계산서", isList);
-		ret.put("현금흐름표", cfList);
+		ret.put("재무상태표", bsList); // < 재무상태표, <총자산, 총자본, 총부채, 유동자산, 현금성자산, 비유동자산, 유동부채, 이익잉여금>>
+		ret.put("손익계산서", isList); // < 손익계산서, <매출액, 매출원가, 매출이익, 법인세비용차감전순이익(손실), 법인세비용, 당기순이익, 포괄손익, EPS >                 
+		ret.put("현금흐름표", cfList); // < 현금흐름표 , <영업활동현금흐름, 투자활동현금흐름, 재무활동현금흐름> >
 
 		this.setParseInfoVO(ret);
 
 	}
-
+	
+	// 기존의 String을 숫자로 변환하는 작업
 	private static BigInteger strToBig(String info_str) {
 		if (info_str == "NA")
 			return null;
