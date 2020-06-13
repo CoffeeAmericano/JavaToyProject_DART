@@ -226,6 +226,98 @@ public class Page extends JFrame {
 
 	}
 	
+	
+	public void calculateInfoVO() {
+		
+		// 안정성비율 지표
+		BigInteger 유동비율;
+		BigInteger 부채비율;
+		BigInteger 자기자본비율;
+		
+		// 성장성비율 지표
+		BigInteger 매출증가율;
+		BigInteger 판매비와관리비증가율;
+		BigInteger 영업이익증가율;
+		BigInteger EPS증가율;
+		
+		// 수익성비율 지표
+		BigInteger 매출총이익률;
+		BigInteger 세전계속사업이익률;
+		BigInteger 영업이익률;
+		BigInteger ROA;
+		
+		// 활동성 비율 지표
+		BigInteger 총자산회전률;
+		BigInteger 총부채회전률;
+		BigInteger 총자본회전률;
+		BigInteger 순운전자본회전율;
+
+		
+		// 주가대비 기업가치 지표
+		BigInteger EPS;
+		BigInteger EBITDAPS;
+		BigInteger CFPS;
+		BigInteger SPS;
+		BigInteger PER;
+		BigInteger PCR;
+		BigInteger PSR;
+		
+		
+		// ret.put("재무상태표", bsList); // < 재무상태표, <총자산, 총자본, 총부채, 유동자산, 현금성자산, 비유동자산, 유동부채, 이익잉여금>>
+		// ret.put("손익계산서", isList); // < 손익계산서, <매출액, 매출원가, 매출이익, 법인세비용차감전순이익(손실), 법인세비용, 당기순이익, 포괄손익, EPS >                 
+		// ret.put("현금흐름표", cfList); // < 현금흐름표 , <영업활동현금흐름, 투자활동현금흐름, 재무활동현금흐름> >
+		
+		// [ 안정성비율 지표 ]
+		// 유동비율 = (유동자산 / 유동부채) *100    [재무제표] O
+		// 부채비율 = (총부채 / 총자본) * 100    [재무제표] O
+		// 자기자본비율 = (총자본 / 총자산) * 100   [재무제표] O
+		
+		
+		
+	
+	    //[ 성장성 비율 ]
+		//매출액증가율 = ((매출액 / 1년전매출액) - 1) * 100    [손익계산서] O
+		//판매비와관리비증가율 = ((판매비와관리비 /  1년전판매비와관리비) - 1) * 100   [손익계산서] O
+		//영업이익증가율 = ((영업이익 /  1년전영업이익) - 1) * 100   [손익계산서] O
+		//EPS증가율 = ((수정EPS /  1년전수정EPS) - 1) * 100  [손익계산서] O 
+		
+
+		
+		
+		//[ 수익성 비율 ]
+		//매출총이익률 = (매출총이익 / 영업수익) * 100  [손익계산서] O
+		//세전계속사업이익률 = (세전계속사업이익 / 영업수익) * 100 [손익계산서] O
+		//영업이익률 = (영업이익 / 영업수익) * 100 [손익계산서] O
+		//ROA = (당기순이익(연율화) / 총자산(평균)) * 100 [손익계산서] O*/
+
+		
+		//[활동성 비율]
+		//총자산회전률 = 영업수익(연율화) / 총자산(평균)
+		//총부채회전률 = 영업수익(연율화) / 총부채(평균)
+		//총자본회전률 = 영업수익(연율화) / 총자본(평균)
+		//순운전자본회전율 = 영업수익(연율화) / 순운전자본(평균)
+
+		
+		//[주가대비 기업가치]
+		//EPS = 지배주주순이익 / 수정평균주식수
+		//EBITDAPS = EBITDA / 수정평균주식수
+		//CFPS = 현금흐름 / 수정평균주식수
+		//SPS = 영업수익 / 수정평균주식수
+
+		
+		//PER = 수정주가(보통주) / 수정EPS
+		//PCR = 수정주가(보통주) / 수정CFPS
+		//PSR = 수정주가(보통주) / 수정SPS
+
+		
+		//EV/Sales = EV/매출액(영업수익)
+		//EV/EBITDA = EV/EBITDA
+		//EV = 시가총액 - 순차입금(총차입금 - 현금예금)
+		
+		
+		
+	}
+	
 	// 기존의 String을 숫자로 변환하는 작업
 	private static BigInteger strToBig(String info_str) {
 		if (info_str == "NA")
