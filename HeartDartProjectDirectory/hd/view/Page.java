@@ -8,9 +8,9 @@ import hd.dao.SearchDAO;
 import hd.vo.InfoVO;
 
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.*;
+import java.math.BigDecimal; // 추가
+import java.math.BigInteger; // 추가
+import java.util.*; // 추가
 import java.awt.event.ActionEvent;
 
 public class Page extends JFrame {
