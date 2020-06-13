@@ -11,26 +11,26 @@ import java.awt.event.ActionEvent;
 public class Page extends JFrame {
 
 	private JPanel contentPane;
+	private InfoVO infoVO;
+	private Map<String, ArrayList<BigInteger>> parseInfoVO;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Page frame = new Page();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public InfoVO getInfoVO() {
+		return infoVO;
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	public void setInfoVO(InfoVO infoVO) {
+		this.infoVO = infoVO;
+	}
+	
+	public Map<String, ArrayList<BigInteger>> getParseInfoVO() {
+		return parseInfoVO;
+	}
+
+	public void setParseInfoVO(Map<String, ArrayList<BigInteger>> parseInfoVO) {
+		this.parseInfoVO = parseInfoVO;
+	}
+
+	
 	public Page() {
 		setForeground(Color.WHITE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Page.class.getResource("/SecPage/HeartDart.png")));
@@ -185,40 +185,40 @@ public class Page extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	public Map<String, ArrayList<String>> parseInfo(InfoVO infoVO) {
+	public void parseInfoVO(InfoVO infoVO) {
 
-		Map<String, ArrayList<String>> ret = new HashMap<>(3, 1);
-		ArrayList<String> bsList = new ArrayList<>();
-		ArrayList<String> isList = new ArrayList<>();
-		ArrayList<String> cfList = new ArrayList<>();
+		Map<String, ArrayList<BigInteger>> ret = new HashMap<>(3, 1);
+		ArrayList<BigInteger> bsList = new ArrayList<>();
+		ArrayList<BigInteger> isList = new ArrayList<>();
+		ArrayList<BigInteger> cfList = new ArrayList<>();
 
 		Scanner sc = new Scanner(infoVO.getBs()).useDelimiter("_");
-		
+
 		while (sc.hasNext()) {
-			bsList.add(sc.next());
+			bsList.add(strToBig(sc.next()));
 		}
-		for(int i = 0; i<bsList.size(); i++) {
+		for (int i = 0; i < bsList.size(); i++) {
 			System.out.println(bsList.get(i));
 		}
-		
+
 		sc = new Scanner(infoVO.getIs()).useDelimiter("_");
 		while (sc.hasNext()) {
-			isList.add(sc.next());
+			isList.add(strToBig(sc.next()));
 		}
-		
+
 		sc = new Scanner(infoVO.getCf()).useDelimiter("_");
 		while (sc.hasNext()) {
-			cfList.add(sc.next());
+			cfList.add(strToBig(sc.next()));
 		}
 		ret.put("재무상태표", bsList);
 		ret.put("손익계산서", isList);
 		ret.put("현금흐름표", cfList);
-		
-		return ret;
+
+		this.setParseInfoVO(ret);
 
 	}
-	
-	public BigInteger strToBig(String info_str) {
+
+	private static BigInteger strToBig(String info_str) {
 		if (info_str == "NA")
 			return null;
 		return new BigDecimal(info_str).toBigInteger();
