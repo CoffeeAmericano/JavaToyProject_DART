@@ -1,44 +1,43 @@
 package hd.vo;
 
 public class InfoVO {
-	private int comCode;
-	private int[] bs;
-	private int[] is;
-	private int[] cf;
+	private String comCode;
+	private String bs;
+	private String is;
+	private String cf;
 	
 	public InfoVO() {
 		super();
 	}
-	
-	public InfoVO(int comCode, int[] bs, int[] is, int[] cf) {
+	public InfoVO(String comCode, String bs, String is, String cf) {
 		super();
 		this.comCode = comCode;
 		this.bs = bs;
 		this.is = is;
 		this.cf = cf;
 	}
-	public int getComCode() {
+	public String getComCode() {
 		return comCode;
 	}
-	public void setComCode(int comCode) {
+	public void setComCode(String comCode) {
 		this.comCode = comCode;
 	}
-	public int[] getBs() {
+	public String getBs() {
 		return bs;
 	}
-	public void setBs(int[] bs) {
+	public void setBs(String bs) {
 		this.bs = bs;
 	}
-	public int[] getIs() {
+	public String getIs() {
 		return is;
 	}
-	public void setIs(int[] is) {
+	public void setIs(String is) {
 		this.is = is;
 	}
-	public int[] getCf() {
+	public String getCf() {
 		return cf;
 	}
-	public void setCf(int[] cf) {
+	public void setCf(String cf) {
 		this.cf = cf;
-	}	
+	}
 }
