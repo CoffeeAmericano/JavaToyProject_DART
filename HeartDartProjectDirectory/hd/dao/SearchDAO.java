@@ -30,7 +30,7 @@ public class SearchDAO implements HeartDartSQL {
 			}
 
 			while (rs.next()) {
-				Object data[] = {rs.getString(2), rs.getString(3), rs.getString(1)};
+				Object data[] = {rs.getString(1), rs.getString(2), rs.getString(3)};
 				t_model.addRow(data); // DefaultTableModel에 레코드 추가
 			}
 
@@ -59,7 +59,7 @@ public class SearchDAO implements HeartDartSQL {
 				dt.removeRow(0);
 			}
 			while (rs.next()) {
-				Object data[] = {rs.getString(2), rs.getString(3), rs.getString(1)};
+				Object data[] = {rs.getString(1), rs.getString(2), rs.getString(3)};
 				dt.addRow(data);
 			}
 
@@ -78,18 +78,8 @@ public class SearchDAO implements HeartDartSQL {
 		ResultSet rs = null;
 
 		try {
-			switch(fieldName) {
-			case "com_name" : 
-				pstm = conn.prepareStatement(company_searchName);
-				break;
-			case "com_code" :
-				pstm = conn.prepareStatement(company_searchCode);
-				break;
-			case "industry_name" :
-				pstm = conn.prepareStatement(company_searchIndustry);
-				break;
+			pstm = conn.prepareStatement(company_search(fieldName));
 				
-			}
 			pstm.setString(1, word.trim());
 			rs = pstm.executeQuery();
 
@@ -98,7 +88,7 @@ public class SearchDAO implements HeartDartSQL {
 				dt.removeRow(0);
 			}
 			while (rs.next()) {
-				Object data[] = {rs.getString(2), rs.getString(3), rs.getString(1)};
+				Object data[] = {rs.getString(1), rs.getString(2), rs.getString(3)};
 				dt.addRow(data);
 			}
 
