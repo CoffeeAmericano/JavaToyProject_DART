@@ -21,15 +21,13 @@ public class InfoDAO implements HeartDartSQL {
 		ResultSet rs = null;
 		InfoVO infoVO = null;
 		try {
-			String sql = "SELECT COM_CODE, BS_" + period +", IS_" + period + 
-						", CF_" + period +" FROM DARTTABLE "
-						+ "WHERE COM_CODE LIKE '%' || ? || '%'";
-			pstm = conn.prepareStatement(sql);
+			pstm = conn.prepareStatement(info_select(period));
 			pstm.setString(1, clickCode);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				infoVO = new InfoVO(rs.getString(1), rs.getString(2), 
-						rs.getString(3), rs.getString(4));
+						rs.getString(3), rs.getString(4), rs.getString(5),
+						rs.getString(6), rs.getString(7));
 			}
 		} catch (Exception e) {
 			System.out.println(e + "=> getInfoSelect fail");
