@@ -45,7 +45,7 @@ public class Menu1 extends JFrame implements MouseListener {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Menu1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu2.class.getResource("/hd/view/HeartDart.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu1.class.getResource("/hd/view/HeartDart.png")));
 		setTitle("\u2665Heart Dart\u2665 - Search");
 		setBounds(100, 100, 481, 319);
 		contentPane = new JPanel();
@@ -120,31 +120,29 @@ public class Menu1 extends JFrame implements MouseListener {
 
 		searchButton = new JButton("\uAC80\uC0C9");
 		main.add(searchButton);
+		
+		getComTable();
+		
+		searchButton.addMouseListener(this);
+		table.addMouseListener(this);
+		
+	}
 
+	private void getComTable() {
+		
 		String[] name = { "회사명", "업종명", "종목코드" };
 		dt = new DefaultTableModel(name, 0) {
 			public boolean isCellEditable(int i, int c) {
 				return false;
 			}
 		};
-		
 		table = new JTable(dt);
 		scrollPane.setViewportView(table);
 
-		
-
-		// 회사 테이블을 첫 화면에 띄우기
-		// 화면에 모든 회사 목록 띄우기 -> BIZ호출
 		SearchBIZ.userSelectAll(dt);
 
 		if (dt.getRowCount() > 0)
 			table.setRowSelectionInterval(0, 0);
-
-		// 유저 조건 서치
-
-		searchButton.addMouseListener(this);
-		table.addMouseListener(this);
-
 	}
 
 	@Override
@@ -170,13 +168,14 @@ public class Menu1 extends JFrame implements MouseListener {
 			int row = jt.rowAtPoint(point);
 			if (e.getClickCount() == 2 && jt.getSelectedRow() != -1) {
 				String clickCode = (String) jt.getValueAt(row, 2);
-				String period = yearChoice.getSelectedItem().substring(2, 4) + "_" + quarterChoice.getSelectedItem();
+				String period = yearChoice.getSelectedItem().substring(2, 4) 
+						+ "_" + quarterChoice.getSelectedItem();
+				
 				InfoVO infoVO = new InfoBIZ().infoSelect(clickCode, period);
-				System.out.println(infoVO.getBs());
 
 				Page page = new Page();
 				page.setInfoVO(infoVO);
-				info_str = page.parseInfo(page.getInfoVO());
+				page.parseInfoVO(infoVO);
 			}
 		}
 	}
