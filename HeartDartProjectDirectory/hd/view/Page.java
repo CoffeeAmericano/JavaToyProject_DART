@@ -17,7 +17,14 @@ public class Page extends JFrame {
 
 	private JPanel contentPane;
 	private InfoVO infoVO;
-	private Map<String, ArrayList<BigInteger>> parseInfoVO;
+	private static Map<String, ArrayList<BigInteger>> parseInfoVO;
+	
+	static Double 유동비율;
+	static Double 부채비율, 자기자본비율; // 안정성비율 지표	
+	static Double 매출증가율, 영업이익증가율, EPS증가율; // 성장성비율 지표
+	static Double 매출총이익률, ROA, ROE; // 수익성비율 지표
+	static Double 총자산회전률, 총부채회전률, 총자본회전률, 순운전자본회전율; // 활동성 비율 지표
+	static Double 영업활동현금흐름, 재무활동현금흐름, 투자활동현금흐름; // 운용성 지표
 
 	public InfoVO getInfoVO() {
 		return infoVO;
@@ -194,128 +201,211 @@ public class Page extends JFrame {
 	
 	// parseInfoVO 메서드는 String 형태의 InfoVO를 숫자로 변환해주는 메서드
 	public void parseInfoVO(InfoVO infoVO) {
-
+		Scanner sc = null;
 		Map<String, ArrayList<BigInteger>> ret = new HashMap<>(3, 1);
-		ArrayList<BigInteger> bsList = new ArrayList<>();
-		ArrayList<BigInteger> isList = new ArrayList<>();
-		ArrayList<BigInteger> cfList = new ArrayList<>();
+		ArrayList<BigInteger> bs_last = new ArrayList<>();
+		ArrayList<BigInteger> is_last = new ArrayList<>();
+		ArrayList<BigInteger> cf_last = new ArrayList<>();
+		ArrayList<BigInteger> bs_now = new ArrayList<>();
+		ArrayList<BigInteger> is_now = new ArrayList<>();
+		ArrayList<BigInteger> cf_now = new ArrayList<>();
 
-		Scanner sc = new Scanner(infoVO.getBs()).useDelimiter("_");
-
+		sc = new Scanner(infoVO.getBs_last()).useDelimiter("_");
 		while (sc.hasNext()) {
-			bsList.add(strToBig(sc.next()));
-		}
-		for (int i = 0; i < bsList.size(); i++) {
-			System.out.println(bsList.get(i));
+			bs_last.add(strToBig(sc.next()));
 		}
 
-		sc = new Scanner(infoVO.getIs()).useDelimiter("_");
+		sc = new Scanner(infoVO.getIs_last()).useDelimiter("_");
 		while (sc.hasNext()) {
-			isList.add(strToBig(sc.next()));
+			is_last.add(strToBig(sc.next()));
 		}
 
-		sc = new Scanner(infoVO.getCf()).useDelimiter("_");
+		sc = new Scanner(infoVO.getCf_last()).useDelimiter("_");
 		while (sc.hasNext()) {
-			cfList.add(strToBig(sc.next()));
+			cf_last.add(strToBig(sc.next()));
 		}
-		ret.put("재무상태표", bsList); // < 재무상태표, <총자산, 총자본, 총부채, 유동자산, 현금성자산, 비유동자산, 유동부채, 이익잉여금>>
-		ret.put("손익계산서", isList); // < 손익계산서, <매출액, 매출원가, 매출이익, 법인세비용차감전순이익(손실), 법인세비용, 당기순이익, 포괄손익, EPS >                 
-		ret.put("현금흐름표", cfList); // < 현금흐름표 , <영업활동현금흐름, 투자활동현금흐름, 재무활동현금흐름> >
+
+		sc = new Scanner(infoVO.getBs_now()).useDelimiter("_");
+		while (sc.hasNext()) {
+			bs_now.add(strToBig(sc.next()));
+		}
+
+		sc = new Scanner(infoVO.getIs_now()).useDelimiter("_");
+		while (sc.hasNext()) {
+			is_now.add(strToBig(sc.next()));
+		}
+
+		sc = new Scanner(infoVO.getCf_now()).useDelimiter("_");
+		while (sc.hasNext()) {
+			cf_now.add(strToBig(sc.next()));
+		}
+
+		sc.close();
+		ret.put("bs_last", bs_last);
+		ret.put("is_last", is_last);
+		ret.put("cf_last", cf_last);
+		ret.put("bs_now", bs_now);
+		ret.put("is_now", is_now);
+		ret.put("cf_now", cf_now);
 
 		this.setParseInfoVO(ret);
 
 	}
 	
 	
-	public void calculateInfoVO() {
+	public static void calculateInfoVO() {
 		
-		// 안정성비율 지표
-     		BigInteger 유동비율;
-     		BigInteger 부채비율;
-      		BigInteger 자기자본비율;
-      
-      		// 성장성비율 지표
-      		BigInteger 매출증가율;
-     		BigInteger 영업이익증가율;
-      		BigInteger EPS증가율;
-      
-     		// 수익성비율 지표
-     		BigInteger 매출총이익률;
-     		BigInteger 세전계속사업이익률;
-  		BigInteger 영업이익률;
-   		BigInteger ROA;
-      
-      		// 활동성 비율 지표
-      		BigInteger 총자산회전률;
-      		BigInteger 총부채회전률;
-      		BigInteger 총자본회전률;
-      		BigInteger 순운전자본회전율;
+		try {
+			유동비율 = (parseInfoVO.get("bs_now").get(3)).doubleValue()
+					/ (parseInfoVO.get("bs_now").get(6)).doubleValue()
+					* 100;
+		}catch(NullPointerException ne) {
+			유동비율 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 유동비율 에러");
+		}
+		
+		try {
+			부채비율 = (parseInfoVO.get("bs_now").get(2)).doubleValue()
+					/ (parseInfoVO.get("bs_now").get(1)).doubleValue()
+					* 100;
+		}catch(NullPointerException ne) {
+			부채비율 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 부채비율 에러");
+		}
+		
+		try {
+			자기자본비율 = (parseInfoVO.get("bs_now").get(1)).doubleValue()
+					/ (parseInfoVO.get("bs_now").get(0)).doubleValue()
+					* 100;
+		}catch(NullPointerException ne) {
+			자기자본비율 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 자기자본비율 에러");
+		}
+		
+		try {
+			매출증가율 = ((parseInfoVO.get("is_now").get(0)).doubleValue()
+					/ (parseInfoVO.get("is_last").get(0)).doubleValue()
+					- 1)
+					* 100;
+		}catch(NullPointerException ne) {
+			매출증가율 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 매출증가율 에러");
+		}
+		
+		try {
+			영업이익증가율 = ((parseInfoVO.get("is_now").get(2)).doubleValue()
+					/ (parseInfoVO.get("is_last").get(2)).doubleValue()
+					- 1)
+					* 100;
+		}catch(NullPointerException ne) {
+			영업이익증가율 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 영업이익증가율 에러");
+		}
+		
+		try {
+			EPS증가율 = ((parseInfoVO.get("is_now").get(7)).doubleValue()
+					/ (parseInfoVO.get("is_last").get(7)).doubleValue()
+					- 1)
+					* 100;
+		}catch(NullPointerException ne) {
+			EPS증가율 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => EPS증가율 에러");
+		}
+		
+		try {
+			매출총이익률 = (parseInfoVO.get("is_now").get(2)).doubleValue()
+					/ (parseInfoVO.get("is_now").get(3)).doubleValue()
+					* 100;
+		}catch(NullPointerException ne) {
+			매출총이익률 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 매출총이익률 에러");
+		}
+		
+		try {
+			ROA = (parseInfoVO.get("is_now").get(5)).doubleValue()
+					/ (parseInfoVO.get("bs_now").get(0)).doubleValue()
+					* 100;
+		}catch(NullPointerException ne) {
+			ROA = null;
+		}catch(Exception e) {
+			System.out.println(e + " => ROA 에러");
+		}
+		
+		try {
+			ROE = (parseInfoVO.get("is_now").get(5)).doubleValue()
+					/ (parseInfoVO.get("bs_now").get(1)).doubleValue()
+					* 100;
+		}catch(NullPointerException ne) {
+			ROE = null;
+		}catch(Exception e) {
+			System.out.println(e + " => ROE 에러");
+		}
+		
+		try {
+			총자산회전률 = (parseInfoVO.get("is_now").get(0)).doubleValue()
+					/ (parseInfoVO.get("bs_now").get(0)).doubleValue()
+					* 100;
+		}catch(NullPointerException ne) {
+			총자산회전률 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 총자산회전률 에러");
+		}
+		
+		try {
+			총부채회전률 = (parseInfoVO.get("is_now").get(0)).doubleValue()
+					/ (parseInfoVO.get("bs_now").get(2)).doubleValue()
+					* 100;
+		}catch(NullPointerException ne) {
+			총부채회전률 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 총부채회전률 에러");
+		}
+		
+		try {
+			총자본회전률 = (parseInfoVO.get("is_now").get(0)).doubleValue()
+					/ (parseInfoVO.get("bs_now").get(1)).doubleValue()
+					* 100;
+		}catch(NullPointerException ne) {
+			총자본회전률 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 총자본회전률 에러");
+		}
+		
+		try {
+			영업활동현금흐름 = parseInfoVO.get("cf_now").get(0).doubleValue();
+		}catch(NullPointerException ne) {
+			영업활동현금흐름 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 영업활동현금흐름 에러");
+		}
+		
+		try {
+			투자활동현금흐름 = parseInfoVO.get("cf_now").get(1).doubleValue();
+		}catch(NullPointerException ne) {
+			투자활동현금흐름 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 투자활동현금흐름 에러");
+		}
+		
+		try {
+			재무활동현금흐름 = parseInfoVO.get("cf_now").get(2).doubleValue();
+		}catch(NullPointerException ne) {
+			재무활동현금흐름 = null;
+		}catch(Exception e) {
+			System.out.println(e + " => 재무활동현금흐름 에러");
+		}	
 
-      
-      		// 주가대비 기업가치 지표
-      		BigInteger EPS;
-
-      		// 현금흐름표
-		
-		
-		// ret.put("재무상태표", bsList); // < 재무상태표, <총자산, 총자본, 총부채, 유동자산, 현금성자산, 비유동자산, 유동부채, 이익잉여금>>
-		// ret.put("손익계산서", isList); // < 손익계산서, <매출액, 매출원가, 매출이익, 법인세비용차감전순이익(손실), 법인세비용, 당기순이익, 포괄손익, EPS >                 
-		// ret.put("현금흐름표", cfList); // < 현금흐름표 , <영업활동현금흐름, 투자활동현금흐름, 재무활동현금흐름> >
-		
-		// [ 안정성비율 지표 ]
-		// 유동비율 = (유동자산 / 유동부채) *100    [재무제표] O
-		// 부채비율 = (총부채 / 총자본) * 100    [재무제표] O
-		// 자기자본비율 = (총자본 / 총자산) * 100   [재무제표] O
-		
-		
-		
-	
-	   	//[ 성장성 비율 ]
-		//매출액증가율 = ((매출액 / 1년전매출액) - 1) * 100    [손익계산서] O
-		//판매비와관리비증가율 = ((판매비와관리비 /  1년전판매비와관리비) - 1) * 100   [손익계산서] O
-		//영업이익증가율 = ((영업이익 /  1년전영업이익) - 1) * 100   [손익계산서] O
-		//EPS증가율 = ((수정EPS /  1년전수정EPS) - 1) * 100  [손익계산서] O 
-		
-
-		
-		
-		//[ 수익성 비율 ]
-		//매출총이익률 = (매출총이익 / 영업수익) * 100  [손익계산서] O
-		//세전계속사업이익률 = (세전계속사업이익 / 영업수익) * 100 [손익계산서] O
-		//영업이익률 = (영업이익 / 영업수익) * 100 [손익계산서] O
-		//ROA = (당기순이익(연율화) / 총자산(평균)) * 100 [손익계산서] O*/
-
-		
-		//[활동성 비율]
-		//총자산회전률 = 영업수익(연율화) / 총자산(평균)
-		//총부채회전률 = 영업수익(연율화) / 총부채(평균)
-		//총자본회전률 = 영업수익(연율화) / 총자본(평균)
-		//순운전자본회전율 = 영업수익(연율화) / 순운전자본(평균)
-
-		
-		//[주가대비 기업가치]
-		//EPS = 지배주주순이익 / 수정평균주식수
-		//EBITDAPS = EBITDA / 수정평균주식수
-		//CFPS = 현금흐름 / 수정평균주식수
-		//SPS = 영업수익 / 수정평균주식수
-
-		
-		//PER = 수정주가(보통주) / 수정EPS
-		//PCR = 수정주가(보통주) / 수정CFPS
-		//PSR = 수정주가(보통주) / 수정SPS
-
-		
-		//EV/Sales = EV/매출액(영업수익)
-		//EV/EBITDA = EV/EBITDA
-		//EV = 시가총액 - 순차입금(총차입금 - 현금예금)
-		
-		
-		
 	}
-	
-	// 기존의 String을 숫자로 변환하는 작업
-	private static BigInteger strToBig(String info_str) {
-		if (info_str == "NA")
+
+	public static BigInteger strToBig(String info_str) {
+		if (info_str.equals("NA"))
 			return null;
 		return new BigDecimal(info_str).toBigInteger();
 	}
