@@ -49,8 +49,9 @@ public class FiveChart {
 	   
 	    Page p = new Page();
 	    p.parseInfo(infoVO);
-	    Long 총자산 = p.getParseInfo().get("bs_now").get(0).longValue();
+	    
 	    try {
+	    Long 총자산 = p.getParseInfo().get("bs_now").get(0).longValue();
 	    if(총자산 >= 5000000000000L) f.getCategory_value()[0] = 9;
 	    else if(총자산 >= 500000000000L) f.getCategory_value()[0]= 6;
 	    else f.getCategory_value()[0] = 3;
@@ -58,8 +59,9 @@ public class FiveChart {
 	    	f.getCategory_value()[0] = 0;
 	    }
 	    
-	    Double 부채비율 = p.부채비율;
+	    
 	    try {
+	    Double 부채비율 = Page.부채비율;
 	    if(부채비율 < 50) f.getCategory_value()[1] = 9;
 	    else if( 50 <= 부채비율 && 부채비율 < 90) f.getCategory_value()[1] = 7;
 	    else if( 90 <= 부채비율 && 부채비율 < 110) f.getCategory_value()[1] = 5;
@@ -69,8 +71,9 @@ public class FiveChart {
 	    	f.getCategory_value()[1] = 0;
 	    }
 	    
-	    Double ROA = p.ROA;	    
+	   
 	    try {
+	    	 Double ROA = Page.ROA;	    	
 	    if (ROA < 70) f.getCategory_value()[2] = 9;
 	    else if (ROA < 50) f.getCategory_value()[2] = 8;
 	    else if (ROA < 20) f.getCategory_value()[2] = 7;
@@ -83,8 +86,9 @@ public class FiveChart {
 	    	f.getCategory_value()[2] = 0;
 	    }
 	    
-	    Double 자기자본 = p.자기자본비율;	    
+	        
 	    try {
+	    	Double 자기자본 = Page.자기자본비율;	
 	    if (자기자본 > 70) f.getCategory_value()[3] = 9;
 	    else if (자기자본 > 50) f.getCategory_value()[3] = 7;
 	    else if (자기자본 > 30) f.getCategory_value()[3] = 5;
@@ -94,8 +98,9 @@ public class FiveChart {
 	    	f.getCategory_value()[3] = 0;
 	    }
 	    
-	    Double 유동비율 = p.유동비율;	    
+	    	    
 	    try {
+	    	Double 유동비율 = Page.유동비율;
 	    if (유동비율 > 200) f.getCategory_value()[4] = 9;
 	    else if (유동비율 > 180) f.getCategory_value()[4] = 7;
 	    else if (유동비율 > 150) f.getCategory_value()[4] = 6;
