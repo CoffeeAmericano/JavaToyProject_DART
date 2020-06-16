@@ -44,17 +44,20 @@ public class Menu1 extends JFrame implements MouseListener {
 	private InfoVO infoVO;
 	
 	public Menu1() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu1.class.getResource("/hd/view/HeartDart.png")));
 		setTitle("\u2665Heart Dart\u2665 - Search");
-		setBounds(100, 100, 481, 319);
+		setBounds(100, 100, 481, 312);
+		setResizable(false);
+		setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - this.getSize().width) /2, 
+				(Toolkit.getDefaultToolkit().getScreenSize().height - this.getSize().height) /2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		main = new JPanel();
-		main.setBounds(0, 235, 463, 37);
+		main.setBounds(0, 235, 475, 44);
 		main.setBackground(new Color(205, 92, 92));
 		contentPane.add(main);
 
@@ -70,7 +73,7 @@ public class Menu1 extends JFrame implements MouseListener {
 
 		periodBar = new JPanel();
 		periodBar.setBackground(Color.DARK_GRAY);
-		periodBar.setBounds(0, 0, 463, 30);
+		periodBar.setBounds(0, 0, 475, 30);
 		contentPane.add(periodBar);
 		periodBar.setLayout(null);
 
@@ -113,7 +116,7 @@ public class Menu1 extends JFrame implements MouseListener {
 
 		scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(0, 31, 463, 206);
+		scrollPane.setBounds(0, 31, 475, 207);
 		contentPane.add(scrollPane);
 
 		searchButton = new JButton("\uAC80\uC0C9");
@@ -170,14 +173,18 @@ public class Menu1 extends JFrame implements MouseListener {
 				String period = yearChoice.getSelectedItem().substring(2, 4) 
 						+ "_" + quarterChoice.getSelectedItem();
 				
-				infoVO = new InfoBIZ().infoSelect(clickCode, period);
-
-				Page page = new Page();
-				page.setInfoVO(infoVO);
-				page.setParseInfo(page.parseInfo(infoVO));
-				page.calculateInfo();
-				page.View();
-				page.setVisible(true);
+				try {
+					infoVO = new InfoBIZ().infoSelect(clickCode, period);
+					Page page = new Page();
+					page.setInfoVO(infoVO);
+					page.setParseInfo(page.parseInfo(infoVO));
+					page.calculateInfo();
+					page.View();
+					page.setVisible(true);
+				} catch (Exception e1) {
+					ErrorFrame ef = new ErrorFrame();
+				}
+				
 			}
 		}
 	}
