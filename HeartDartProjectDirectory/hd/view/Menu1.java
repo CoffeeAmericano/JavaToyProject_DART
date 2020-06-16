@@ -18,6 +18,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class Menu1 extends JFrame implements MouseListener {
 
@@ -35,14 +37,12 @@ public class Menu1 extends JFrame implements MouseListener {
 	private JTextField searchTextField;
 	private JTable table;
 	private DefaultTableModel dt;
-	@SuppressWarnings("rawtypes")
 	private JComboBox searchCombo;
 	private JButton searchButton;
 	private JScrollPane scrollPane;
 	
-	private Map<String, ArrayList<String>> info_str;
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private InfoVO infoVO;
+	
 	public Menu1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu1.class.getResource("/hd/view/HeartDart.png")));
@@ -98,8 +98,6 @@ public class Menu1 extends JFrame implements MouseListener {
 
 		yearChoice = new Choice();
 		yearChoice.setBounds(163, 3, 74, 24);
-		yearChoice.add("2015");
-		yearChoice.add("2016");
 		yearChoice.add("2017");
 		yearChoice.add("2018");
 		yearChoice.add("2019");
@@ -166,16 +164,20 @@ public class Menu1 extends JFrame implements MouseListener {
 			JTable jt = (JTable) e.getSource();
 			Point point = e.getPoint();
 			int row = jt.rowAtPoint(point);
+			
 			if (e.getClickCount() == 2 && jt.getSelectedRow() != -1) {
 				String clickCode = (String) jt.getValueAt(row, 2);
 				String period = yearChoice.getSelectedItem().substring(2, 4) 
 						+ "_" + quarterChoice.getSelectedItem();
 				
-				InfoVO infoVO = new InfoBIZ().infoSelect(clickCode, period);
+				infoVO = new InfoBIZ().infoSelect(clickCode, period);
 
 				Page page = new Page();
 				page.setInfoVO(infoVO);
-				page.parseInfoVO(infoVO);
+				page.setParseInfo(page.parseInfo(infoVO));
+				page.calculateInfo();
+				page.View();
+				page.setVisible(true);
 			}
 		}
 	}
