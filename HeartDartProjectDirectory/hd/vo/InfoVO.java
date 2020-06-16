@@ -12,7 +12,6 @@ public class InfoVO {
 	
 	public InfoVO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public InfoVO(String comCode, String bs_last, String is_last, String cf_last, String bs_now, String is_now,
