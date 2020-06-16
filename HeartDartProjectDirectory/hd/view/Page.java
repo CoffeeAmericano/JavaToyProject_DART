@@ -3,6 +3,7 @@ package hd.view;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -10,6 +11,7 @@ import org.jfree.data.category.CategoryDataset;
 
 import java.util.*;
 
+import hd.biz.SearchBIZ;
 import hd.vo.InfoVO;
 
 import java.awt.event.ActionListener;
@@ -34,24 +36,35 @@ public class Page extends JFrame {
 	private JLabel HeartDartLabel;
 	private Panel chartPanel;
 	private JPanel tab1;
+	private JPanel mainStatPanel;
 	private CategoryDataset dataset;
-	private BufferedReader input;
-	private String line;
-	private JFileChooser fc;
-	
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_2;
+	private JLabel lblRoa;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
 	private JPanel contentPane;
 	private InfoVO infoVO;
+	private JLabel heartPointLabel;
+	private JPanel tablePanel;
+	private JScrollPane scrollPane;
+	
 	
 	public static Map<String, ArrayList<BigInteger>> parseInfo;
 	static Double 유동비율, 부채비율, 자기자본비율; // 안정성비율 지표
 	static Double 매출증가율, 영업이익증가율, EPS증가율; // 성장성비율 지표
 	static Double 매출총이익률, ROA, ROE; // 수익성비율 지표
-	static Double 총자산회전률, 총부채회전률, 총자본회전률, 순운전자본회전율; // 활동성 비율 지표
+	static Double 총자산회전률, 총부채회전률, 총자본회전률; // 활동성 비율 지표
 	static Double 영업활동현금흐름, 재무활동현금흐름, 투자활동현금흐름; // 운용성 지표
-	
-	
 	private JTable table;
-	
+	private JPanel panel;
+	private JPanel tab1_1;
+	private JTabbedPane tabpane;
+	private JTextArea textArea;
+	private JScrollPane scrollPane_1;
+	private JTable table_1;
+	private JScrollPane scrollPane_2;
+
 	public InfoVO getInfoVO() {
 		return infoVO;
 	}
@@ -67,6 +80,14 @@ public class Page extends JFrame {
 	public void setParseInfo(Map<String, ArrayList<BigInteger>> parseInfo) {
 		this.parseInfo = parseInfo;
 	}
+	
+	public CategoryDataset getDataset() {
+		return dataset;
+	}
+
+	public void setDataset(CategoryDataset dataset) {
+		this.dataset = dataset;
+	}
 
 	public Page() {
 		setForeground(Color.WHITE);
@@ -79,10 +100,19 @@ public class Page extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		panel = new JPanel();
+		panel.setBounds(644, 263, 408, -208);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 398, -172);
+		panel.add(scrollPane);
 
 		sidePanel = new Panel();
-		sidePanel.setBackground(Color.BLACK);
 		sidePanel.setBounds(0, 0, 234, 575);
+		sidePanel.setBackground(Color.BLACK);
 		contentPane.add(sidePanel);
 		sidePanel.setLayout(null);
 
@@ -120,276 +150,80 @@ public class Page extends JFrame {
 		HeartDartLabel.setForeground(new Color(255, 255, 255));
 		HeartDartLabel.setFont(new Font("굴림", Font.BOLD, 30));
 		
-		JPanel mainStatPanel = new JPanel();
-		mainStatPanel.setBackground(Color.BLACK);
+		mainStatPanel = new JPanel();
 		mainStatPanel.setBounds(242, 320, 398, 251);
+		mainStatPanel.setBackground(Color.BLACK);
 		contentPane.add(mainStatPanel);
 		mainStatPanel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("\uC790\uC0B0\uADDC\uBAA8");
-		lblNewLabel.setForeground(Color.ORANGE);
+		
+		lblNewLabel = new JLabel("\uC790\uC0B0\uADDC\uBAA8");
+		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 19));
 		lblNewLabel.setBounds(23, 28, 120, 30);
 		mainStatPanel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("\uBD80\uCC44\uBE44\uC728\uC810\uC218");
-		lblNewLabel_2.setForeground(Color.ORANGE);
+		lblNewLabel_2 = new JLabel("\uBD80\uCC44\uBE44\uC728\uC810\uC218");
+		lblNewLabel_2.setForeground(Color.WHITE);
 		lblNewLabel_2.setFont(new Font("맑은 고딕", Font.BOLD, 19));
 		lblNewLabel_2.setBounds(23, 70, 120, 30);
 		mainStatPanel.add(lblNewLabel_2);
 		
-		JLabel lblRoa = new JLabel("ROA\uC810\uC218");
-		lblRoa.setForeground(Color.ORANGE);
+		lblRoa = new JLabel("ROA\uC810\uC218");
+		lblRoa.setForeground(Color.WHITE);
 		lblRoa.setFont(new Font("맑은 고딕", Font.BOLD, 19));
 		lblRoa.setBounds(23, 112, 120, 30);
 		mainStatPanel.add(lblRoa);
 		
-		JLabel lblNewLabel_4 = new JLabel("\uC720\uB3D9\uBE44\uC728\uC810\uC218");
-		lblNewLabel_4.setForeground(Color.ORANGE);
+		lblNewLabel_4 = new JLabel("\uC790\uAE30\uC790\uBCF8\uBE44\uC728");
+		lblNewLabel_4.setForeground(Color.WHITE);
 		lblNewLabel_4.setFont(new Font("맑은 고딕", Font.BOLD, 19));
 		lblNewLabel_4.setBounds(23, 154, 120, 30);
 		mainStatPanel.add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_5 = new JLabel("\uC720\uB3D9\uBE44\uC728\uC810\uC218");
-		lblNewLabel_5.setForeground(Color.ORANGE);
+		lblNewLabel_5 = new JLabel("\uC720\uB3D9\uBE44\uC728\uC810\uC218");
+		lblNewLabel_5.setForeground(Color.WHITE);
 		lblNewLabel_5.setFont(new Font("맑은 고딕", Font.BOLD, 19));
 		lblNewLabel_5.setBounds(23, 196, 120, 30);
 		mainStatPanel.add(lblNewLabel_5);
 		
-		JPanel pointPanel1_1 = new JPanel();
-		pointPanel1_1.setBackground(Color.ORANGE);
-		pointPanel1_1.setBounds(157, 35, 18, 23);
-		mainStatPanel.add(pointPanel1_1);
+		tabpane = new JTabbedPane();
+	      tabpane.setBackground(Color.WHITE);
+	      tabpane.setSize(430, 272);
+	      tabpane.setLocation(644, 299);
+	      contentPane.add(tabpane);
+
+	      tab1_1 = new JPanel();
+	      tab1_1.setToolTipText("");
+	      tab1_1.setBackground(Color.WHITE);
+	      tabpane.add("안전성", tab1_1);
+	      tab1_1.setLayout(null);
+	      
+	      scrollPane_1 = new JScrollPane();
+	      scrollPane_1.setBounds(0, 0, 420, 240);
+	      tab1_1.add(scrollPane_1);
+	      
+	      textArea = new JTextArea();
+	      textArea.setForeground(Color.WHITE);
+	      textArea.setFont(new Font("돋움", Font.BOLD, 19));
+	      textArea.setBackground(Color.BLACK);
+	      textArea.setLineWrap(true);
+	      textArea.setEditable(false);
+	      scrollPane_1.setViewportView(textArea);
+	      tabpane.setBackgroundAt(0, Color.WHITE);
+	      
+	      scrollPane_2 = new JScrollPane();
+	      scrollPane_2.setBounds(644, 37, 430, 250);
+	      contentPane.add(scrollPane_2);
+	      
+	      table_1 = new JTable();
+	      scrollPane_2.setViewportView(table_1);
+	      
 		
-		JPanel pointPanel1_2 = new JPanel();
-		pointPanel1_2.setBackground(Color.ORANGE);
-		pointPanel1_2.setBounds(179, 35, 18, 23);
-		mainStatPanel.add(pointPanel1_2);
-		
-		JPanel pointPanel1_3 = new JPanel();
-		pointPanel1_3.setBackground(Color.ORANGE);
-		pointPanel1_3.setBounds(201, 35, 18, 23);
-		mainStatPanel.add(pointPanel1_3);
-		
-		JPanel pointPanel1_4 = new JPanel();
-		pointPanel1_4.setBackground(Color.ORANGE);
-		pointPanel1_4.setBounds(223, 35, 18, 23);
-		mainStatPanel.add(pointPanel1_4);
-		
-		JPanel pointPanel1_5 = new JPanel();
-		pointPanel1_5.setBackground(Color.ORANGE);
-		pointPanel1_5.setBounds(245, 35, 18, 23);
-		mainStatPanel.add(pointPanel1_5);
-		
-		JPanel pointPanel1_6 = new JPanel();
-		pointPanel1_6.setBackground(Color.ORANGE);
-		pointPanel1_6.setBounds(267, 35, 18, 23);
-		mainStatPanel.add(pointPanel1_6);
-		
-		JPanel pointPanel1_7 = new JPanel();
-		pointPanel1_7.setBackground(Color.ORANGE);
-		pointPanel1_7.setBounds(289, 35, 18, 23);
-		mainStatPanel.add(pointPanel1_7);
-		
-		JPanel pointPanel1_8 = new JPanel();
-		pointPanel1_8.setBackground(Color.ORANGE);
-		pointPanel1_8.setBounds(311, 35, 18, 23);
-		mainStatPanel.add(pointPanel1_8);
-		
-		JPanel pointPanel1_9 = new JPanel();
-		pointPanel1_9.setBackground(Color.ORANGE);
-		pointPanel1_9.setBounds(333, 35, 18, 23);
-		mainStatPanel.add(pointPanel1_9);
-		
-		JPanel pointPanel2_1 = new JPanel();
-		pointPanel2_1.setBackground(Color.ORANGE);
-		pointPanel2_1.setBounds(157, 77, 18, 23);
-		mainStatPanel.add(pointPanel2_1);
-		
-		JPanel pointPanel2_2 = new JPanel();
-		pointPanel2_2.setBackground(Color.ORANGE);
-		pointPanel2_2.setBounds(179, 77, 18, 23);
-		mainStatPanel.add(pointPanel2_2);
-		
-		JPanel pointPanel2_3 = new JPanel();
-		pointPanel2_3.setBackground(Color.ORANGE);
-		pointPanel2_3.setBounds(201, 77, 18, 23);
-		mainStatPanel.add(pointPanel2_3);
-		
-		JPanel pointPanel2_4 = new JPanel();
-		pointPanel2_4.setBackground(Color.ORANGE);
-		pointPanel2_4.setBounds(223, 77, 18, 23);
-		mainStatPanel.add(pointPanel2_4);
-		
-		JPanel pointPanel2_5 = new JPanel();
-		pointPanel2_5.setBackground(Color.ORANGE);
-		pointPanel2_5.setBounds(245, 77, 18, 23);
-		mainStatPanel.add(pointPanel2_5);
-		
-		JPanel pointPanel2_6 = new JPanel();
-		pointPanel2_6.setBackground(Color.ORANGE);
-		pointPanel2_6.setBounds(267, 77, 18, 23);
-		mainStatPanel.add(pointPanel2_6);
-		
-		JPanel pointPanel2_7 = new JPanel();
-		pointPanel2_7.setBackground(Color.ORANGE);
-		pointPanel2_7.setBounds(289, 77, 18, 23);
-		mainStatPanel.add(pointPanel2_7);
-		
-		JPanel pointPanel2_8 = new JPanel();
-		pointPanel2_8.setBackground(Color.ORANGE);
-		pointPanel2_8.setBounds(311, 77, 18, 23);
-		mainStatPanel.add(pointPanel2_8);
-		
-		JPanel pointPanel2_9 = new JPanel();
-		pointPanel2_9.setBackground(Color.ORANGE);
-		pointPanel2_9.setBounds(333, 77, 18, 23);
-		mainStatPanel.add(pointPanel2_9);
-		
-		JPanel pointPanel3_1 = new JPanel();
-		pointPanel3_1.setBackground(Color.ORANGE);
-		pointPanel3_1.setBounds(157, 119, 18, 23);
-		mainStatPanel.add(pointPanel3_1);
-		
-		JPanel pointPanel3_2 = new JPanel();
-		pointPanel3_2.setBackground(Color.ORANGE);
-		pointPanel3_2.setBounds(179, 119, 18, 23);
-		mainStatPanel.add(pointPanel3_2);
-		
-		JPanel pointPanel3_3 = new JPanel();
-		pointPanel3_3.setBackground(Color.ORANGE);
-		pointPanel3_3.setBounds(201, 119, 18, 23);
-		mainStatPanel.add(pointPanel3_3);
-		
-		JPanel pointPanel3_4 = new JPanel();
-		pointPanel3_4.setBackground(Color.ORANGE);
-		pointPanel3_4.setBounds(223, 119, 18, 23);
-		mainStatPanel.add(pointPanel3_4);
-		
-		JPanel pointPanel3_5 = new JPanel();
-		pointPanel3_5.setBackground(Color.ORANGE);
-		pointPanel3_5.setBounds(245, 119, 18, 23);
-		mainStatPanel.add(pointPanel3_5);
-		
-		JPanel pointPanel3_6 = new JPanel();
-		pointPanel3_6.setBackground(Color.ORANGE);
-		pointPanel3_6.setBounds(267, 119, 18, 23);
-		mainStatPanel.add(pointPanel3_6);
-		
-		JPanel pointPanel3_7 = new JPanel();
-		pointPanel3_7.setBackground(Color.ORANGE);
-		pointPanel3_7.setBounds(289, 119, 18, 23);
-		mainStatPanel.add(pointPanel3_7);
-		
-		JPanel pointPanel3_8 = new JPanel();
-		pointPanel3_8.setBackground(Color.ORANGE);
-		pointPanel3_8.setBounds(311, 119, 18, 23);
-		mainStatPanel.add(pointPanel3_8);
-		
-		JPanel pointPanel3_9 = new JPanel();
-		pointPanel3_9.setBackground(Color.ORANGE);
-		pointPanel3_9.setBounds(333, 119, 18, 23);
-		mainStatPanel.add(pointPanel3_9);
-		
-		JPanel pointPanel4_1 = new JPanel();
-		pointPanel4_1.setBackground(Color.ORANGE);
-		pointPanel4_1.setBounds(157, 161, 18, 23);
-		mainStatPanel.add(pointPanel4_1);
-		
-		JPanel pointPanel4_2 = new JPanel();
-		pointPanel4_2.setBackground(Color.ORANGE);
-		pointPanel4_2.setBounds(179, 161, 18, 23);
-		mainStatPanel.add(pointPanel4_2);
-		
-		JPanel pointPanel4_3 = new JPanel();
-		pointPanel4_3.setBackground(Color.ORANGE);
-		pointPanel4_3.setBounds(201, 161, 18, 23);
-		mainStatPanel.add(pointPanel4_3);
-		
-		JPanel pointPanel4_4 = new JPanel();
-		pointPanel4_4.setBackground(Color.ORANGE);
-		pointPanel4_4.setBounds(223, 161, 18, 23);
-		mainStatPanel.add(pointPanel4_4);
-		
-		JPanel pointPanel4_5 = new JPanel();
-		pointPanel4_5.setBackground(Color.ORANGE);
-		pointPanel4_5.setBounds(245, 161, 18, 23);
-		mainStatPanel.add(pointPanel4_5);
-		
-		JPanel pointPanel4_6 = new JPanel();
-		pointPanel4_6.setBackground(Color.ORANGE);
-		pointPanel4_6.setBounds(267, 161, 18, 23);
-		mainStatPanel.add(pointPanel4_6);
-		
-		JPanel pointPanel4_7 = new JPanel();
-		pointPanel4_7.setBackground(Color.ORANGE);
-		pointPanel4_7.setBounds(289, 161, 18, 23);
-		mainStatPanel.add(pointPanel4_7);
-		
-		JPanel pointPanel4_8 = new JPanel();
-		pointPanel4_8.setBackground(Color.ORANGE);
-		pointPanel4_8.setBounds(311, 161, 18, 23);
-		mainStatPanel.add(pointPanel4_8);
-		
-		JPanel pointPanel4_9 = new JPanel();
-		pointPanel4_9.setBackground(Color.ORANGE);
-		pointPanel4_9.setBounds(333, 161, 18, 23);
-		mainStatPanel.add(pointPanel4_9);
-		
-		JPanel pointPanel5_1 = new JPanel();
-		pointPanel5_1.setBackground(Color.ORANGE);
-		pointPanel5_1.setBounds(157, 203, 18, 23);
-		mainStatPanel.add(pointPanel5_1);
-		
-		JPanel pointPanel5_2 = new JPanel();
-		pointPanel5_2.setBackground(Color.ORANGE);
-		pointPanel5_2.setBounds(179, 203, 18, 23);
-		mainStatPanel.add(pointPanel5_2);
-		
-		JPanel pointPanel5_3 = new JPanel();
-		pointPanel5_3.setBackground(Color.ORANGE);
-		pointPanel5_3.setBounds(201, 203, 18, 23);
-		mainStatPanel.add(pointPanel5_3);
-		
-		JPanel pointPanel5_4 = new JPanel();
-		pointPanel5_4.setBackground(Color.ORANGE);
-		pointPanel5_4.setBounds(223, 203, 18, 23);
-		mainStatPanel.add(pointPanel5_4);
-		
-		JPanel pointPanel5_5 = new JPanel();
-		pointPanel5_5.setBackground(Color.ORANGE);
-		pointPanel5_5.setBounds(245, 203, 18, 23);
-		mainStatPanel.add(pointPanel5_5);
-		
-		JPanel pointPanel5_6 = new JPanel();
-		pointPanel5_6.setBackground(Color.ORANGE);
-		pointPanel5_6.setBounds(267, 203, 18, 23);
-		mainStatPanel.add(pointPanel5_6);
-		
-		JPanel pointPanel5_7 = new JPanel();
-		pointPanel5_7.setBackground(Color.ORANGE);
-		pointPanel5_7.setBounds(289, 203, 18, 23);
-		mainStatPanel.add(pointPanel5_7);
-		
-		JPanel pointPanel5_8 = new JPanel();
-		pointPanel5_8.setBackground(Color.ORANGE);
-		pointPanel5_8.setBounds(311, 203, 18, 23);
-		mainStatPanel.add(pointPanel5_8);
-		
-		JPanel pointPanel5_9 = new JPanel();
-		pointPanel5_9.setBackground(Color.ORANGE);
-		pointPanel5_9.setBounds(333, 203, 18, 23);
-		mainStatPanel.add(pointPanel5_9);
 		setSize(1107, 630);
 		setLocationRelativeTo(null);		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(659, 31, 416, 277);
-		contentPane.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
 	}
 
 	public Map<String, ArrayList<BigInteger>> parseInfo(InfoVO infoVO) {
@@ -501,6 +335,7 @@ public class Page extends JFrame {
 			EPS증가율 = null;
 		} catch (Exception e) {
 			System.out.println(e + " => EPS증가율 에러");
+			EPS증가율 = null;
 		}
 
 		try {
@@ -589,17 +424,113 @@ public class Page extends JFrame {
 
 	}
 	
-	public void chartView() {
-		dataset = FiveChart.createDataset(infoVO);
-		JFreeChart chart = FiveChart.createChart(dataset);
+	public void View() {
+		FiveChart f = new FiveChart();
+		dataset = f.createDataset(infoVO);
+		JFreeChart chart = f.createChart(dataset);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBackground(Color.WHITE);
 		chartPanel.setBounds(240, 16, 389, 280);
-        chartPanel.setPreferredSize(new java.awt.Dimension(500, 500));
+        chartPanel.setPreferredSize(new java.awt.Dimension(0, 0));
         contentPane.add(chartPanel);
 		chartPanel.setLayout(null);
+		
+		for(int i =0; i<dataset.getColumnCount(); i++) {
+			int n = dataset.getValue(0, i).intValue();
+			while(n > 0) {
+				heartPointLabel = new JLabel("New label");
+				heartPointLabel.setIcon(new ImageIcon(Page.class.getResource("/hd/view/pointHeart.png")));
+				heartPointLabel.setBounds(166 + (9-n)*22, 34 + 40*i, 30, 29);
+				mainStatPanel.add(heartPointLabel);
+				n--;
+			}
+		}
+		
+		String[] name = { "Type", "Stat", "Value" };
+		DefaultTableModel dt = new DefaultTableModel(name, 0) {
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
+		
+		Object[][] data = {
+			{"안정성","유동비율",String.format("%7.3f", Page.유동비율)},
+			{"안정성","부채비율",Page.부채비율},
+			{"안정성","자기자본비율",Page.자기자본비율},
+			{"성장성","매출증가율",Page.매출증가율},
+			{"성장성","영업이익증가율",Page.영업이익증가율},
+			{"성장성","EPS증가율",Page.EPS증가율},
+			{"수익성","매출총이익률",Page.매출총이익률},
+			{"수익성","ROA",Page.ROA},
+			{"수익성","ROE",Page.ROE},
+			{"활동성","총자산회전률",Page.총자산회전률},
+			{"활동성","총부채회전률",Page.총부채회전률},
+			{"활동성","총자본회전률",Page.총자본회전률},
+			{"운용성","영업활동현금흐름",Page.영업활동현금흐름},
+			{"운용성","재무활동현금흐름",Page.재무활동현금흐름},
+			{"운용성","투자활동현금흐름",Page.투자활동현금흐름}};
+		
+		for(Object[] r : data) {
+			dt.addRow(r);
+		}
+		
+		table_1 = new JTable(dt);
+		scrollPane_2.setViewportView(table_1);
+		
+		if (dt.getRowCount() > 0)
+			table_1.setRowSelectionInterval(0, 0);
+		
+		// 종목별 평가
+		
+		String stable_str = "";
+		if(dataset.getValue(0, 0).intValue() == 9) {
+			stable_str += "이 회사는 자산규모 5조를 상회하는 대기업으로 "; 		
+		}else if(dataset.getValue(0, 0).intValue() == 6) {
+			stable_str += "이 회사는 자산규모 5천억을 상회하는 중견기업으로 ";
+		}else if(dataset.getValue(0, 0).intValue() == 3) {
+			stable_str += "이 회사는 자산규모 5천억 미만의 중소기업으로 ";
+		}else {
+			stable_str += "이 회사는 ";
+		}
+		
+		if(dataset.getValue(0, 4).intValue() == 9) {
+			stable_str += "유동비율이 200%수준을 넘어 부채에 대한 지급능력이 월등히 높고 "; 		
+		}else if(dataset.getValue(0, 4).intValue() == 7) {
+			stable_str += "유동비율이 180%수준을 넘어 부채에 대한 지급능력이 높고 ";
+		}else if(dataset.getValue(0, 4).intValue() == 6) {
+			stable_str += "유동비율이 150%수준으로 부채에 대한 지급능력이 높고 ";
+		}else if(dataset.getValue(0, 4).intValue() == 4) {
+			stable_str += "유동비율이 130%수준으로 부채에 대한 지급능력이 평이하고 ";
+		}else if(dataset.getValue(0, 4).intValue() == 3) {
+			stable_str += "유동비율이 100%에 가까운 수준으로 부채에 대한 지급능력이 낮고 ";
+		}else if(dataset.getValue(0, 4).intValue() == 2) {
+			stable_str += "유동비율이 100%에 미치지 못하는 수준으로 부채에 대한 지급능력이 매우 낮고 ";
+		}else {
+			stable_str += "";
+		}
+		
+		if(dataset.getValue(0, 1).intValue() >= 5) {
+			stable_str += "부채비율이 90%미만으로 타인자본의존도가 낮고 "; 		
+		}else if(dataset.getValue(0, 1).intValue() < 5) {
+			stable_str += "부채비율이 90%이상으로 타인자본의존도가 높고 ";
+		}else {
+			stable_str += "";
+		}
+		
+		if(dataset.getValue(0, 3).intValue() >= 7) {
+			stable_str += "자기자본비율이 50%이상으로 매우 안정적인 재무구조를 보인다."; 		
+		}else if(dataset.getValue(0, 4).intValue() >= 5) {
+			stable_str += "자기자본비율이 30%이상으로 안정적인 재무구조를 보인다.";
+		}else if(dataset.getValue(0, 4).intValue() < 3) {
+			stable_str += "자기자본비율이 30%미만으로 불안정한 재무구조를 보인다.";
+		}else {
+			stable_str += "";
+		}
+		textArea.setText(stable_str);
+		textArea.setBounds(644, 299 , 409, 380);
+		
 	}
-
+	
 	public static BigInteger strToBig(String info_str) {
 		if (info_str.equals("NA"))
 			return null;
