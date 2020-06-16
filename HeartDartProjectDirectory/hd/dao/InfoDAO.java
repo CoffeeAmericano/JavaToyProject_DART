@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import hd.view.ErrorFrame;
 import hd.vo.InfoVO;
 
 import static common.JDBCTemplate.*;
@@ -16,7 +17,7 @@ public class InfoDAO implements HeartDartSQL {
 		this.conn = conn;
 	}
 
-	public InfoVO getInfoSelect(String clickCode, String period) {
+	public InfoVO getInfoSelect(String clickCode, String period) throws Exception{
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		InfoVO infoVO = null;
@@ -27,10 +28,8 @@ public class InfoDAO implements HeartDartSQL {
 			while (rs.next()) {
 				infoVO = new InfoVO(rs.getString(1), rs.getString(2), 
 						rs.getString(3), rs.getString(4), rs.getString(5),
-						rs.getString(6), rs.getString(7));
-			}
-		} catch (Exception e) {
-			System.out.println(e + "=> getInfoSelect fail");
+						rs.getString(6), rs.getString(7), rs.getString(8));
+			}			
 		} finally {
 			Close(rs);
 			Close(pstm);
