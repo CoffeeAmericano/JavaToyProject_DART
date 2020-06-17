@@ -60,6 +60,9 @@
 https://analystree.tistory.com/entry/%EC%9E%AC%EB%AC%B4%EC%A0%9C%ED%91%9C-%EC%9A%94%EC%95%BD-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8
 
 
-2020.06.16 [ To Do ]
+2020.06.17 [ To Do ] - 자바 프로젝트 발표 및 시연
 
-- 
+- 발표 자료 준비 (~10:00)
+- 코드 오류 최소화 
+- 캡쳐 기능 -- 경로
+- DB 원격 접속 가능 여부 -- 소켓?
