@@ -66,3 +66,7 @@ https://analystree.tistory.com/entry/%EC%9E%AC%EB%AC%B4%EC%A0%9C%ED%91%9C-%EC%9A
 - 코드 오류 최소화 
 - 캡쳐 기능 -- 경로
 - DB 원격 접속 가능 여부 -- 소켓?
+
+
+2020.06.18
+완료 
