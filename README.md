@@ -70,3 +70,9 @@ https://analystree.tistory.com/entry/%EC%9E%AC%EB%AC%B4%EC%A0%9C%ED%91%9C-%EC%9A
 
 2020.06.18
 완료 
+
+
+2020.06.19
+- 1조 피드백 드리기 : 추가했으면 하는 기능, 피드백 등등
+- 3조 피드백 받기
+
